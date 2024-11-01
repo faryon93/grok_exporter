@@ -34,6 +34,7 @@ const (
 	inputTypeFile                 = "file"
 	inputTypeWebhook              = "webhook"
 	inputTypeKafka                = "kafka"
+	inputTypeRsyslog              = "rsyslog"
 	importMetricsType             = "metrics"
 	importPatternsType            = "grok_patterns"
 )
@@ -444,7 +445,8 @@ func (c *InputConfig) validate() error {
 		if vMajorErr != nil && vMinorErr != nil && vMajor < 1 && vMinor < 8 {
 			return fmt.Errorf("invalid input configuration: Kafka 'input.kafka_version' must be >= 0.8.0")
 		}
-
+	case c.Type == inputTypeRsyslog:
+		// TODO: validate configuration of rsyslog tailer
 	default:
 		return fmt.Errorf("unsupported 'input.type': %v", c.Type)
 	}

@@ -355,6 +355,8 @@ func startTailer(cfg *v3.Config, registry prometheus.Registerer) (fswatcher.File
 		tail = tailer.InitWebhookTailer(&cfg.Input)
 	case cfg.Input.Type == "kafka":
 		tail = tailer.RunKafkaTailer(&cfg.Input)
+	case cfg.Input.Type == "rsyslog":
+		tail = tailer.RunRsyslogTailer(&cfg.Input)
 	default:
 		return nil, fmt.Errorf("Config error: Input type '%v' unknown.", cfg.Input.Type)
 	}
